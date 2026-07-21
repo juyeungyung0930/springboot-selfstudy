@@ -1,0 +1,85 @@
+plugins {
+    id 'java'                                            // Java 프로젝트
+    id 'war'                                             // WAR 파일 생성
+    id 'base'                                            // 기본 Gradle 기능 제공
+    id 'org.springframework.boot' version '4.1.0'        // Spring Boot 플러그인
+    id 'io.spring.dependency-management' version '1.1.7' // 의존성 버전 관리
+}
+
+group = 'com.shinhan'        // 프로젝트 그룹명
+version = '0.0.1-SNAPSHOT'   // 프로젝트 버전
+description = 'guestbook'    // 프로젝트 설명
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)     // Java 17 사용
+    }
+}
+
+repositories {
+    mavenCentral()                                       // Maven Central 저장소 사용
+}
+
+ext {
+    querydslVersion = '5.1.0'                            // Querydsl 버전 관리
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor                  // annotationProcessor를 compileOnly에 포함
+    }
+}
+
+dependencies {
+
+    // Spring Boot
+    implementation 'org.springframework.boot:spring-boot-starter-web'          // Spring MVC
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'    // Thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'     // Spring Data JPA
+
+    // MariaDB
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'   // MariaDB JDBC 드라이버
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'               // Lombok 라이브러리
+    annotationProcessor 'org.projectlombok:lombok'       // Lombok 코드 자동 생성
+
+    // DevTools
+    developmentOnly 'org.springframework.boot:spring-boot-devtools' // 개발 편의 기능
+
+    // Tomcat
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat' // 외부 Tomcat 배포용
+
+    // Thymeleaf Java8 Time
+    // implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time' // LocalDateTime 포맷 지원
+
+    // Querydsl
+    implementation "com.querydsl:querydsl-jpa:${querydslVersion}:jakarta"      // Querydsl JPA
+    annotationProcessor "com.querydsl:querydsl-apt:${querydslVersion}:jakarta" // Q클래스 생성
+
+    // Jakarta
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"   // Jakarta Annotation
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api" // Jakarta JPA
+
+    // Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test' // 테스트 라이브러리
+}
+
+// Querydsl 생성 파일 위치
+def generated = layout.buildDirectory.dir("generated/sources/annotationProcessor/java/main")
+
+sourceSets {
+    main {
+        java {
+            srcDirs += generated                         // 생성된 Q클래스를 소스에 포함
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.generatedSourceOutputDirectory.set(generated.get().asFile) // Q클래스 생성 위치 지정
+}
+
+tasks.named('test') {
+    useJUnitPlatform()                                  // JUnit 5 사용
+}

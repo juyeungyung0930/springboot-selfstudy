@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .target {
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <h4>1번실습</h4>
+    <li th:each="dto : ${list}">
+        [[${dto}]]
+
+    </li>
+    <!--
+    SampleDTO(sno=1, first=first==1, last=last==1, regTime=2026-07-14T15:13:01.142728200)
+    SampleDTO(sno=2, first=first==2, last=last==2, regTime=2026-07-14T15:13:01.142728200)
+    SampleDTO(sno=3, first=first==3, last=last==3, regTime=2026-07-14T15:13:01.142728200)
+    -->
+    <h4>2번실습</h4>
+    <li th:each="dto,state : ${list}">
+        [[${state.index}]]--- [[${dto}]]
+    </li>
+    <!--
+    0--- SampleDTO(sno=1, first=first==1, last=last==1, regTime=2026-07-14T15:17:51.297359)
+    1--- SampleDTO(sno=2, first=first==2, last=last==2, regTime=2026-07-14T15:17:51.297359)
+    2--- SampleDTO(sno=3, first=first==3, last=last==3, regTime=2026-07-14T15:17:51.297359)
+    -->
+    <h4>3번실습</h4>
+    <li th:each="dto, state : ${list}" th:if="${dto.sno % 5 == 0}">
+        [[${dto}]]
+    </li>
+    <!--SampleDTO(sno=5, first=first==5, last=last==5, regTime=2026-07-14T15:20:40.536725400)-->
+    <h4>5번실습</h4>
+    <li th:each="dto, state : ${list}">
+        <span th:if="${dto.sno % 5 == 0}" th:text="${'---------'+dto.sno}"></span>
+        <span th:unless="${dto.sno%5==0}" th:text="${dto.first}"></span>
+    </li>
+    <!--
+    first==1
+    first==2
+    first==3
+    first==4
+    -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;5
+    first==6
+    first==7
+    first==8
+    first==9
+    -->
+    <h4>6번실습</h4>
+    <li th:each="dto, state : ${list}" th:text="${dto.sno % 3 == 0}?${dto.sno}">
+    </li>
+    <!--
+
+
+    3
+
+
+    6
+
+
+    9
+
+    -->
+    <h4>7번실습</h4>
+    <li th:each="dto, state : ${list}" th:text="${dto.sno % 5 == 0}?${dto.sno}:${dto.first}">
+    </li>
+    <!--
+    sno를 5로나눈 나머지가 0인경우 sno만출력하고 나머지는 first를 출력
+    first==1
+    first==2
+    first==3
+    first==4
+    5
+    first==6
+    first==7
+    first==8
+    first==9
+    -->
+    <h4>8번실습</h4>
+    <li th:each="dto, state : ${list}" th:class="${dto.sno % 5 == 0}?'target'" th:text="${dto}">
+    </li>
+    <!--
+    SampleDTO(sno=1, first=first==1, last=last==1, regTime=2026-07-14T15:37:38.461272300)
+    SampleDTO(sno=2, first=first==2, last=last==2, regTime=2026-07-14T15:37:38.461272300)
+    SampleDTO(sno=3, first=first==3, last=last==3, regTime=2026-07-14T15:37:38.461272300)
+    SampleDTO(sno=4, first=first==4, last=last==4, regTime=2026-07-14T15:37:38.461272300)
+    SampleDTO(sno=5, first=first==5, last=last==5, regTime=2026-07-14T15:37:38.461272300) target css들어감
+    SampleDTO(sno=6, first=first==6, last=last==6, regTime=2026-07-14T15:37:38.461272300)
+    SampleDTO(sno=7, first=first==7, last=last==7, regTime=2026-07-14T15:37:38.461272300)
+    SampleDTO(sno=8, first=first==8, last=last==8, regTime=2026-07-14T15:37:38.461272300)
+    SampleDTO(sno=9, first=first==9, last=last==9, regTime=2026-07-14T15:37:38.461272300)
+    -->
+    <h4>9번실습(7번과 결과동일)</h4>
+
+    <th:block th:each="dto, state : ${list}">
+        <li th:text="${dto.sno % 5 == 0}?${dto.sno}:${dto.first}">
+        </li>
+    </th:block>
+</ul>
+
+
+</body>
+</html>
