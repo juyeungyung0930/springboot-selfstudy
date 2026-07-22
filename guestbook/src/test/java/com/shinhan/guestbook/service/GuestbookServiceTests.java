@@ -40,7 +40,7 @@ public class GuestbookServiceTests {
 
     }
 
-    @Test
+   /* @Test
    public void testList(){
 
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(10).build();
@@ -50,7 +50,7 @@ public class GuestbookServiceTests {
        for (GuestbookDTO guestbookDTO : resultDTO.getDtoList()) {
            System.out.println(guestbookDTO);
       }
-/*
+*//*
         Hibernate:
         select
         g1_0.gno,
@@ -80,9 +80,34 @@ public class GuestbookServiceTests {
         GuestbookDTO(gno=294, title=Tittle294, content=Content294, writer=user4, regDate=2026-07-21T12:15:43.132505, modDate=2026-07-21T12:15:43.132505)
         GuestbookDTO(gno=293, title=Tittle293, content=Content293, writer=user3, regDate=2026-07-21T12:15:43.129505, modDate=2026-07-21T12:15:43.129505)
         GuestbookDTO(gno=292, title=Tittle292, content=Content292, writer=user2, regDate=2026-07-21T12:15:43.125506, modDate=2026-07-21T12:15:43.125506)
-    */
+    *//*
+    }
+*/
+
+    @Test
+    public void testList(){
+
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(10).build();
+
+        PageResultDTO<GuestbookDTO, Guestbook> resultDTO = service.getList(pageRequestDTO);
+
+        System.out.println("PREV: "+resultDTO.isPrev());
+        System.out.println("NEXT: "+resultDTO.isNext());
+        System.out.println("TOTAL: " + resultDTO.getTotalPage());
+
+        System.out.println("-------------------------------------");
+        for (GuestbookDTO guestbookDTO : resultDTO.getDtoList()) {
+            System.out.println(guestbookDTO);
+        }
+
+        System.out.println("========================================");
+        resultDTO.getPageList().forEach(i -> System.out.println(i));
     }
 
-
+/*
+    PREV: false 현재 1페이지이므로 이전으로가는 링크 필요없음
+    NEXT: true 다음으로 가는 링크 필요
+    TOTAL: 31  페이지 개수
+    */
 
 }
