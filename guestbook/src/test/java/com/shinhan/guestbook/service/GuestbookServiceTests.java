@@ -2,6 +2,9 @@ package com.shinhan.guestbook.service;
 
 
 import com.shinhan.guestbook.dto.GuestbookDTO;
+import com.shinhan.guestbook.dto.PageRequestDTO;
+import com.shinhan.guestbook.dto.PageResultDTO;
+import com.shinhan.guestbook.entity.Guestbook;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,17 +40,17 @@ public class GuestbookServiceTests {
 
     }
 
-//    @Test
-//    public void testList(){
-//
-//        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(10).build();
-//
-//        PageResultDTO<GuestbookDTO, Guestbook> resultDTO = service.getList(pageRequestDTO);
-//
-//        for (GuestbookDTO guestbookDTO : resultDTO.getDtoList()) {
-//            System.out.println(guestbookDTO);
-//        }
-//    }
+    @Test
+   public void testList(){
+
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(10).build();
+
+       PageResultDTO<GuestbookDTO, Guestbook> resultDTO = service.getList(pageRequestDTO);
+
+       for (GuestbookDTO guestbookDTO : resultDTO.getDtoList()) {
+           System.out.println(guestbookDTO);
+      }
+    }
 
 
 
