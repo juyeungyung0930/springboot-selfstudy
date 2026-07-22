@@ -50,6 +50,37 @@ public class GuestbookServiceTests {
        for (GuestbookDTO guestbookDTO : resultDTO.getDtoList()) {
            System.out.println(guestbookDTO);
       }
+/*
+        Hibernate:
+        select
+        g1_0.gno,
+                g1_0.content,
+                g1_0.moddate,
+                g1_0.regdate,
+                g1_0.title,
+                g1_0.writer
+        from
+        guestbook g1_0
+        order by
+        g1_0.gno desc
+        limit
+                ?, ?
+        Hibernate:
+        select
+        count(g1_0.gno)
+        from
+        guestbook g1_0
+        GuestbookDTO(gno=301, title=Sample Title..., content=Sample Content..., writer=user0, regDate=2026-07-22T09:24:51.812891, modDate=2026-07-22T09:24:51.812891)
+        GuestbookDTO(gno=300, title=changeTitle, content=changeContent, writer=user0, regDate=2026-07-21T12:15:43.152318, modDate=2026-07-21T12:20:54.719436)
+        GuestbookDTO(gno=299, title=Tittle299, content=Content299, writer=user9, regDate=2026-07-21T12:15:43.149317, modDate=2026-07-21T12:15:43.149317)
+        GuestbookDTO(gno=298, title=Tittle298, content=Content298, writer=user8, regDate=2026-07-21T12:15:43.145655, modDate=2026-07-21T12:15:43.145655)
+        GuestbookDTO(gno=297, title=Tittle297, content=Content297, writer=user7, regDate=2026-07-21T12:15:43.142645, modDate=2026-07-21T12:15:43.142645)
+        GuestbookDTO(gno=296, title=Tittle296, content=Content296, writer=user6, regDate=2026-07-21T12:15:43.139508, modDate=2026-07-21T12:15:43.139508)
+        GuestbookDTO(gno=295, title=Tittle295, content=Content295, writer=user5, regDate=2026-07-21T12:15:43.135512, modDate=2026-07-21T12:15:43.135512)
+        GuestbookDTO(gno=294, title=Tittle294, content=Content294, writer=user4, regDate=2026-07-21T12:15:43.132505, modDate=2026-07-21T12:15:43.132505)
+        GuestbookDTO(gno=293, title=Tittle293, content=Content293, writer=user3, regDate=2026-07-21T12:15:43.129505, modDate=2026-07-21T12:15:43.129505)
+        GuestbookDTO(gno=292, title=Tittle292, content=Content292, writer=user2, regDate=2026-07-21T12:15:43.125506, modDate=2026-07-21T12:15:43.125506)
+    */
     }
 
 
