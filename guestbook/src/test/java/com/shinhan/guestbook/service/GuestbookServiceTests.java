@@ -24,6 +24,16 @@ public class GuestbookServiceTests {
 
         // 서비스의 등록 기능 호출 후 생성된 gno 출력
         System.out.println(service.register(guestbookDTO));
+/*
+        Hibernate:
+        insert
+                into
+        guestbook
+                (content, moddate, regdate, title, writer)
+        values
+                (?, ?, ?, ?, ?)
+*/
+
 
     }
 
