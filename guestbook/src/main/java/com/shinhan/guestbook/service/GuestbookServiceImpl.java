@@ -1,12 +1,18 @@
 package com.shinhan.guestbook.service;
 
 import com.shinhan.guestbook.dto.GuestbookDTO;
+import com.shinhan.guestbook.dto.PageRequestDTO;
+import com.shinhan.guestbook.dto.PageResultDTO;
 import com.shinhan.guestbook.entity.Guestbook;
 import com.shinhan.guestbook.repository.GuestbookRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.function.Function;
 
 /*
  * ==========================================================
@@ -34,7 +40,6 @@ public class GuestbookServiceImpl implements GuestbookService {
     @Override
     public Long register(GuestbookDTO dto) {
 
-        log.info("DTO~~~~~~~~~~~~~");
         log.info(dto);
 
         Guestbook entity=dtoToEntity(dto);
@@ -44,4 +49,16 @@ public class GuestbookServiceImpl implements GuestbookService {
 
         return entity.getGno();
     }
+    @Override
+    public PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO) {
+        Pageable pageable=requestDTO.getPageable(
+                Sort.by("gno").descending());
+        Page<Guestbook> result =repository.findAll(pageable);
+        Function<Guestbook,GuestbookDTO> fn=(entity-> entityToDto(entity));
+
+        return new PageResultDTO<>(result,fn);
+    }
+
+
+
 }
